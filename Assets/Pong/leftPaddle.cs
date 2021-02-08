@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class leftPaddle : MonoBehaviour
 {
-    
-   
+    public Rigidbody paddleL;
+    public Rigidbody paddleR;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,17 +16,27 @@ public class leftPaddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rigidbody paddle = GetComponent<Rigidbody>();
+        
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("you clicked me!");
-            paddle.AddForce(Vector3.forward);
+            
+            paddleL.AddForce(Vector3.forward);
         }
         if(Input.GetKey(KeyCode.S))
         {
-            paddle.AddForce(Vector3.back);
+            paddleL.AddForce(Vector3.back);
+        }
+        
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            
+            paddleR.AddForce(Vector3.forward);
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            paddleR.AddForce(Vector3.back);
         }
 
-        
+
     }
 }

@@ -118,7 +118,7 @@ public class ball : MonoBehaviour
             if(powerupT < 0)
             {
                 int num = Random.Range(1, 10);
-                if(num < 7)
+                if(num < 4)
                 {
                     powerUp.position = teleport.transform.position;
                     pTimer = false;
@@ -182,18 +182,18 @@ public class ball : MonoBehaviour
             {
                 lHit = false;
             }
-
-            float bounceLocation = transform.position.z - collision.transform.position.z;
-            float maxHeight = collision.collider.bounds.extents.z;
-            float bounceAngle = bounceLocation / maxHeight;
+            //this was backbone that I got from the lecture on thursday I don't want to include it becuase it is not my code
+            ///float bounceLocation = transform.position.z - collision.transform.position.z;
+            ///float maxHeight = collision.collider.bounds.extents.z;
+            ///float bounceAngle = bounceLocation / maxHeight;
 
            
 
             
-            float newHorizontalSpeed = (lHit) ? bounce : -bounce;
+            ///float newHorizontalSpeed = (lHit) ? bounce : -bounce;
 
-            Vector3 newVelocity = new Vector3(newHorizontalSpeed, 0f, bounceAngle * 4f).normalized * bounce;
-            pongBall.velocity = newVelocity;
+            ///Vector3 newVelocity = new Vector3(newHorizontalSpeed, 0f, bounceAngle * 4f).normalized * bounce;
+            ///pongBall.velocity = newVelocity;
            
         }
 
@@ -221,12 +221,12 @@ public class ball : MonoBehaviour
 
             if (scoreR < scoreL)
             {
-                rightScore.color = new Color(1f, .5f - (scoreL-scoreR)/16f, .5f - (scoreL - scoreR) / 16f);
+                rightScore.color = new Color(1f, .5f - (scoreL-scoreR)/20f, .5f - (scoreL - scoreR) / 20f);
                 leftScore.color = new Color(0f, 1f, 0f);
             }
             else if(scoreR > scoreL)
             {
-                leftScore.color = new Color(1f, .5f - (scoreR - scoreL) / 16f, .5f - (scoreR - scoreL) / 16f);
+                leftScore.color = new Color(1f, .5f - (scoreR - scoreL) / 20f, .5f - (scoreR - scoreL) / 20f);
                 rightScore.color = new Color(0f, 1f, 0f);
             }
             else
@@ -235,7 +235,7 @@ public class ball : MonoBehaviour
                 rightScore.color = new Color(1f, 1f, 1f);
             }
 
-            if (scoreL == 5)
+            if (scoreL == 11)
             {
                 win.Play();
                 leftScore.text = "WIN";
@@ -246,7 +246,7 @@ public class ball : MonoBehaviour
                 pongBall.position = teleport.transform.position;
                 gameOver = true;
             }
-            if (scoreR == 5)
+            if (scoreR == 11)
             {
                 win.Play();
                 rightScore.text = "WIN";
@@ -289,7 +289,7 @@ public class ball : MonoBehaviour
             powerUp.position = resetT.transform.position;
             if (lHit)
             {
-                blocker.position = teleport.transform.position;
+                blocker.position = lBlockT.transform.position;
             }
             else if (!lHit)
             {

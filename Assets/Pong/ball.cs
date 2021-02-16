@@ -49,7 +49,7 @@ public class ball : MonoBehaviour
     void Start()
     {
         pongBall = GetComponent<Rigidbody>();
-        //pongBall.velocity = new Vector3(8, 0, 0);
+        
         pongBall.velocity = new Vector3(bounce, 0, 0);
 
         pTimer = true;
@@ -118,7 +118,7 @@ public class ball : MonoBehaviour
             if(powerupT < 0)
             {
                 int num = Random.Range(1, 10);
-                if(num < 4)
+                if(num < 10)
                 {
                     powerUp.position = teleport.transform.position;
                     pTimer = false;
@@ -131,38 +131,7 @@ public class ball : MonoBehaviour
 
    
 
-    /*private void OnCollisionEnter(Collision col)
-    {
-        s
-        if (col.gameObject.name == "Goal Right")
-        {
-            scoreL++;
-            leftScore.text = scoreL.ToString();
-            bounce = 0;
-            activated = true;
-            
-            
-        }
-        if (col.gameObject.name == "Goal Left")
-        {
-            scoreR++;
-            rightScore.text = scoreR.ToString();
-            bounce = 0;
-            activated = true;
-            
-        }
-        if (col.gameObject.name == "PaddleLeft" )
-        {
-            bounce = (float)((bounce * -1) + .3);
-            lHit = true;
-        }
-        if (col.gameObject.name == "PaddleRight")
-        {
-            bounce = (float)((bounce * -1) - .3);
-            lHit = false;
-        }
-
-    }*/
+    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -182,18 +151,18 @@ public class ball : MonoBehaviour
             {
                 lHit = false;
             }
-            //this was backbone that I got from the lecture on thursday I don't want to include it becuase it is not my code
-            ///float bounceLocation = transform.position.z - collision.transform.position.z;
-            ///float maxHeight = collision.collider.bounds.extents.z;
-            ///float bounceAngle = bounceLocation / maxHeight;
+            
+            float bounceLocation = transform.position.z - collision.transform.position.z;
+            float maxHeight = collision.collider.bounds.extents.z;
+            float bounceAngle = bounceLocation / maxHeight;
 
            
 
             
-            ///float newHorizontalSpeed = (lHit) ? bounce : -bounce;
+            float newHorizontalSpeed = (lHit) ? bounce : -bounce;
 
-            ///Vector3 newVelocity = new Vector3(newHorizontalSpeed, 0f, bounceAngle * 4f).normalized * bounce;
-            ///pongBall.velocity = newVelocity;
+            Vector3 newVelocity = new Vector3(newHorizontalSpeed, 0f, bounceAngle * 4f).normalized * bounce;
+            pongBall.velocity = newVelocity;
            
         }
 
@@ -273,12 +242,12 @@ public class ball : MonoBehaviour
         if (collision.gameObject.name == "Wall" || collision.gameObject.name == "Block")
         {
             wall.Play();
-            var direction = Vector3.Reflect(latestVelocity.normalized, collision.contacts[0].normal);
-            pongBall.velocity = direction * bounce;
+            //var direction = Vector3.Reflect(latestVelocity.normalized, collision.contacts[0].normal);
+            //pongBall.velocity = direction * bounce;
         }
 
         
-
+         
 
     }
 
@@ -286,16 +255,19 @@ public class ball : MonoBehaviour
     {
         if (other.gameObject.name == "Power")
         {
+            Debug.Log($"before collision ({Time.frameCount}) = {transform.position}");
             powerUp.position = resetT.transform.position;
             if (lHit)
             {
-                blocker.position = lBlockT.transform.position;
+                blocker.transform.position = lBlockT.transform.position;
+
             }
             else if (!lHit)
             {
-                blocker.position = rBlockT.transform.position;
+                blocker.transform.position = rBlockT.transform.position;
             }
             bTimer = true;
+            Debug.Log($"after collision ({Time.frameCount}) = {transform.position}");
         }
     }
 }
